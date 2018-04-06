@@ -1,0 +1,16 @@
+{
+  "name": "el-compressor",
+  "version": "1.0.0",
+  "description": "Compress and uncompress JSON objects the most lightweight possible",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JSON",
+    "compression",
+    "uncompress"
+  ],
+  "author": "Benjamin Lambron <ben.lambron@gmail.com>",
+  "license": "Beerware"
+}
