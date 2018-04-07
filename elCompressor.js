@@ -2,34 +2,35 @@
 
 const zlib = require('zlib');
 
+function backToUserWithCallback(callback, result) {
+    if (callback && typeof callback === 'function') {
+        callback(result);
+    }
+    return result;
+}
+
+function erroHandler (errorString) {
+    console.log(errorString);
+    return;
+}
 
 module.exports = {
     serialize: function (jsonInput, callback) {
-        return zlib.deflate(JSON.stringify(jsonInput), function(error, buffer) {
+        return zlib.deflate(JSON.stringify(jsonInput), function (error, buffer) {
             if (!error) {
-            const result = buffer.toString('base64');
-              if(callback && typeof callback === 'function') {
-                  callback(result);
-              }
-              return result;
+                return backToUserWithCallback(callback, buffer.toString('base64'));
             }
             else {
-                console.log(jsonInput + ' was not a valid JSON entry');
-                return;
+                return errorHandler(jsonInput + ' was not a valid JSON entry');
             }
         });
     },
-    deserialize: function(serializedJson, callback) {
-        return zlib.inflate(new Buffer(serializedJson, 'base64'), function(error, buffer) {
+    deserialize: function (serializedJson, callback) {
+        return zlib.inflate(new Buffer(serializedJson, 'base64'), function (error, buffer) {
             if (!error) {
-                const result = buffer.toString('utf8');
-              if(callback && typeof callback === 'function') {
-                  callback(result);
-              }
-              return result;
+                return backToUserWithCallback(callback, buffer.toString('utf8'));
             } else {
-                console.log(serializedJson + ' was not a valid Buffer entry');
-                return;
+                return errorHandler(serializedJson + ' was not a valid Buffer entry');
             }
         });
     }
